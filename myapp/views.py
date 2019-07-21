@@ -359,10 +359,8 @@ class UploadEventImage(APIView):
 class testUpload(APIView):
     parser_classes = (MultiPartParser, FormParser)
     permission_classes = (AllowAny,)
-
     def post(self, req, id, format=None):
         res = None
-        print('test this is called')
         try:
             user = req.user
             # id = user.id
@@ -395,7 +393,7 @@ class testUpload(APIView):
             for chunk in f.chunks():
                 fp.write(chunk)
         t = Event.objects.get(pk=event_id)
-        t.event_image = fname
+        t.event_image = filepath
         t.save()
 
     def get_profile_pic_test_upload_path(self, filename, o, event_id):
@@ -757,6 +755,23 @@ class Connections(APIView):
                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         return res
 
+class SearchMarketPlace(APIView):
+    res = None
+    def get(self, req):
+        qr = Q()
+        q = MarketPlace.objects
+        term = req.GET['term']
+        try:
+            if term not in [None, '']:
+                qr = Q(item_name__icontains=term)
+                q = q.filter(qr)
+            else:
+                q = MarketPlace.objects.all()
+            ser = MarketPlaceSerializer(q, many=True, context={'request': req})
+            res = Response(ser.data)
+        except Exception as e:
+            res = Response({'error', 1}, str(e))
+        return res
 
 class MarketPlaceAPIView(APIView):
     res = None
@@ -972,12 +987,6 @@ class UserProfilePictureUpload(APIView):
                     imgPath = j.picture
                     if imgPath not in [None, '']:
                         k = str(j.picture).split('/')
-                        if _delete_file(k[2]):
-                            print('success')
-                        else:
-                            print('can not delete')
-                    else:
-                        print('new image')
                 o = UserProfile.objects.get(pk=id)
                 o.picture = req.FILES['picture']
                 o.save()

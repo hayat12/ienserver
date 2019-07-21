@@ -167,8 +167,9 @@ STATIC_URL = '/static/'
 #     os.path.join(BASE_DIR, "static")
 # ]
 # STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
-MEDIA_URL = "/myapp/media/"
+MEDIA_URL = "/"
 # # STATIC_URL = '/static/' if DEBUG else '/ws/static/'
 # MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media_cdn')
 # # STATIC_URL = '/static/' if DEBUG else '/ws/static/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'myapp/')
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'myapp/')
+MEDIA_ROOT = os.path.join(BASE_DIR, '')

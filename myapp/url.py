@@ -29,6 +29,7 @@ urlpatterns = [
     path('market-place/<int:id>', views.MarketPlaceAPIView.as_view()),
     path('list-market-places', views.MarketPlaceList.as_view()),
     path('market-places-g', views.GlobalMarketPlaceList.as_view()),
+    path('search-market-palce', views.SearchMarketPlace.as_view()),
     path('invite-connections', views.InviteConnections.as_view()),
     path('market-place-pictures/<int:id>', views.MarketPlaceUploadPicture.as_view()),
     path('invite-connections/<int:id>', views.getAgendaConnection.as_view()),
